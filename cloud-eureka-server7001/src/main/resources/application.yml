@@ -1,0 +1,21 @@
+server:
+  port: 7001
+eureka:
+  instance:
+    hostname: eureka7001.com
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+#      单机版
+      defaultZone: http://eureka7001.com:7001/eureka/
+      #集群版
+#      defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+#      defaultZone: http://eureka7002.com:7002/eureka/  #将直接注册进来的服务推送给这里指定的注册中心（不包括推送过来的服务）
+#  server:
+#    enable-self-preservation: false
+#    eviction-interval-timer-in-ms: 2000
+
+logging:
+  level:
+    com.netflix: warn

@@ -1,0 +1,38 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: cloud-provider-service
+    #zipkin配置
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      #采样0到1之间 1表示全部采集
+      probability: 1
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/cloud2020?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+eureka:
+  client:
+    #表示是否将自己注册进
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+#      defaultZone: http://localhost:7001/eureka/
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+  instance:
+    instance-id: payment8001
+    prefer-ip-address: true   #控制台显示ip
+#
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  type-aliases-package: com.wbc.entities

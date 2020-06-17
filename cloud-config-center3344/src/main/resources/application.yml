@@ -1,0 +1,23 @@
+server:
+  port: 3344
+spring:
+  application:
+    name: cloud-config-center
+  cloud:
+    config:
+      server:
+        git:
+          username: wbc389561407
+          password: wbc68947555
+          uri: git@github.com:wbc389561407/springcloud-config.git
+          search-paths:
+            - springcloud-config
+      label: master
+
+
+
+eureka:
+  client:
+    service-url:
+      #      defaultZone: http://localhost:7001/eureka/
+      defaultZone: http://eureka7001.com:7001/eureka/

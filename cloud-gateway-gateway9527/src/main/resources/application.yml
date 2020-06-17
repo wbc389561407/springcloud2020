@@ -1,0 +1,50 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启注册中心动态创建路由功能，利用服务名路由
+      routes:
+      - id: payment_routh  #路由id，没有固定规则 但是要求唯一，建议配合服务名
+#        uri: http://localhost:8001
+        uri: lb://CLOUD-PROVIDER-SERVICE  #匹配后提供路由地址
+        predicates:
+        - Path=/payment/get/**  #断言  路径匹配的进行路由
+        - After=2020-05-29T18:56:49.274+08:00[Asia/Shanghai]  #在指定时间之后才能访问
+        - Cookie=username,zzyy
+
+      - id: payment_routh1
+#        uri: http://localhost:8001
+        uri: lb://CLOUD-PROVIDER-SERVICE
+        predicates:
+        - Path=/payment/lb
+#        - After=2020-05-29T18:56:49.274+08:00[Asia/Shanghai]  #在指定时间之后才能访问
+#        - Cookie=username,zzyy  #带上Cookie才可以访问
+#        打开cmd，curl http://localhost:9527/payment/lb --cookie "username=zzyy"
+#        - Header=X-Request-Id, \d+ #请求头要带有X-Request-Id属性，并且值为正则表达式 这里是整数
+#  打开cmd，curl http://localhost:9527/payment/lb -H "X-Request-Id:123"
+#        - Method=GET
+
+      - id: payment_routh2
+        uri: http://news.baidu.com
+        predicates:
+        - Path=/guonei/**
+
+      - id: payment_routh2
+        uri: http://news.baidu.com
+        predicates:
+        - Path=/guoji/**
+
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #      defaultZone: http://localhost:7001/eureka/
+      defaultZone: http://eureka7001.com:7001/eureka/
